@@ -1,4 +1,4 @@
-// Matriarch1 Website JavaScript
+// Matriarch1 Website JavaScript - MOBILE FOCUSED
 console.log('MATRIARCH1 Website Loaded');
 
 function scrollToSection(sectionId) {
@@ -9,6 +9,8 @@ function scrollToSection(sectionId) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Mobile debugging started');
+    
     const ctaButton = document.querySelector('.cta-button');
     if (ctaButton) {
         ctaButton.addEventListener('click', function() {
@@ -26,103 +28,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // DUAL TRACKING: Desktop (Eye) + Mobile (Touch)
+    // MOBILE TOUCH TRACKING ONLY
     const omButton = document.querySelector('.om-button-diamond');
     if (!omButton) {
         console.log('Om button not found!');
         return;
     }
 
-    // Check if mobile device
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    console.log('Is mobile:', isMobile);
+    console.log('Om button found, setting up touch tracking...');
+
+    let isDragging = false;
+    let startX, startY;
     
-    if (isMobile) {
-        // MOBILE VERSION - Touch movement
-        console.log('Mobile device detected - Using touch tracking');
+    // Visual indicator - change border color when ready
+    omButton.style.border = '3px solid red';
+    
+    // Touch events for mobile
+    omButton.addEventListener('touchstart', function(e) {
+        console.log('Touch started!');
+        isDragging = true;
         
-        let isDragging = false;
-        let startX, startY, initialX, initialY;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
         
-        omButton.style.cursor = 'grab';
+        // Visual feedback
+        omButton.style.border = '3px solid green';
+        omButton.style.background = 'rgba(0, 255, 0, 0.3)';
         
-        // Touch events for mobile
-        omButton.addEventListener('touchstart', function(e) {
-            isDragging = true;
-            omButton.style.cursor = 'grabbing';
-            
+        e.preventDefault();
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+        if (isDragging && e.touches.length > 0) {
             const touch = e.touches[0];
-            startX = touch.clientX;
-            startY = touch.clientY;
+            const deltaX = touch.clientX - startX;
+            const deltaY = touch.clientY - startY;
             
-            // Get current transform values
-            const style = window.getComputedStyle(omButton);
-            const matrix = new DOMMatrixReadOnly(style.transform);
-            initialX = matrix.m41;
-            initialY = matrix.m42;
+            console.log('Moving:', deltaX, deltaY);
             
-            e.preventDefault();
-        });
+            // Move the entire button
+            omButton.style.transform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px))`;
+        }
+    });
+    
+    document.addEventListener('touchend', function() {
+        console.log('Touch ended');
+        isDragging = false;
         
-        document.addEventListener('touchmove', function(e) {
-            if (isDragging && e.touches.length > 0) {
-                const touch = e.touches[0];
-                const deltaX = touch.clientX - startX;
-                const deltaY = touch.clientY - startY;
-                
-                // Move the entire button, not just the symbol
-                omButton.style.transform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px))`;
-            }
-        });
-        
-        document.addEventListener('touchend', function() {
-            isDragging = false;
-            omButton.style.cursor = 'grab';
-        });
-        
-    } else {
-        // DESKTOP VERSION - Eye tracking
-        console.log('Desktop detected - Attempting eye tracking');
-        
-        setTimeout(() => {
-            if (typeof webgazer !== 'undefined') {
-                webgazer.setGazeListener(function(data, elapsedTime) {
-                    if (data && data.x && data.y) {
-                        const x = (data.x / window.innerWidth) * 100 - 50;
-                        const y = (data.y / window.innerHeight) * 100 - 50;
-                        // Move entire button based on eye position
-                        omButton.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-                    }
-                }).begin();
-                
-                webgazer.showVideoPreview(true).showPredictionPoints(true);
-                
-                setTimeout(() => {
-                    alert('Please click on 9 points on screen for eye tracking calibration');
-                }, 1000);
-                
-            } else {
-                console.log('WebGazer not available - Using mouse tracking');
-                // Fallback to mouse tracking - PARENT ELEMENT MOVE KARO
-                document.addEventListener('mousemove', function(e) {  // YAHAN CORRECTION KARO
-                    const x = (e.clientX / window.innerWidth) * 100 - 50;
-                    const y = (e.clientY / window.innerHeight) * 100 - 50;
-                    omButton.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-                });
-            }
-        }, 2000);
-    }
+        // Reset visual
+        omButton.style.border = '3px solid gold';
+        omButton.style.background = '';
+    });
+
+    // Remove desktop/eye tracking code completely for mobile testing
+    console.log('Touch tracking setup complete');
 });
 
+// Simple reset function for mobile
 window.resetCalibration = function() {
-    if (typeof webgazer !== 'undefined') {
-        webgazer.clearData();
-        alert('Calibration reset. Please click on points to recalibrate.');
-    }
-    
-    // Reset Om button position
     const omButton = document.querySelector('.om-button-diamond');
     if (omButton) {
         omButton.style.transform = 'translate(-50%, -50%)';
+        alert('Om position reset to center!');
     }
 };
