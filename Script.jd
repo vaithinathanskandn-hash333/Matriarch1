@@ -1,0 +1,24 @@
+// Matriarch1 Website JavaScript
+console.log('MATRIARCH1 Website Loaded');
+
+document.addEventListener('DOMContentLoaded', function() {
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+        ctaButton.addEventListener('click', function() {
+            alert('Welcome to MATRIARCH1 - The Future of Storytelling!');
+        });
+    }
+    
+    // Smooth scrolling for navigation
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+});
