@@ -449,3 +449,29 @@ body {
     background: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+.eye-reset-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
+}
+
+.eye-reset-btn:hover {
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.om-symbol-tamil {
+    font-size: 1.8rem;
+    transition: transform 0.2s ease-out;
+    display: inline-block;
+    touch-action: none; /* Important for mobile dragging */
+    user-select: none; /* Text selection prevent */
+}
