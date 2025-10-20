@@ -475,3 +475,20 @@ body {
     touch-action: none; /* Important for mobile dragging */
     user-select: none; /* Text selection prevent */
 }
+.om-button-diamond {
+    /* Existing styles */
+    touch-action: none; /* Important for mobile dragging */
+    user-select: none; /* Text selection prevent */
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .om-button-diamond {
+        width: 80px;  /* Thoda bada karo mobile ke liye */
+        height: 80px;
+    }
+    
+    .om-symbol-tamil {
+        font-size: 2.2rem; /* Mobile par readable size */
+    }
+}
