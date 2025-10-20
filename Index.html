@@ -3,34 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATRIARCH1 - Future of Storytelling</title>
+    <title>MATRIARCH1 - Through the Lens of Soul</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">MATRIARCH1</div>
+            <div class="nav-menu">
+                <a href="#vision">Vision</a>
+                <a href="#projects">Projects</a>
+                <a href="#team">Team</a>
+                <a href="#investment">Investment</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Hero Section with Video Background -->
     <section class="hero">
+        <!-- YouTube Video Background -->
+        <div class="video-background">
+            <div class="video-overlay"></div>
+            <iframe 
+                src="https://www.youtube.com/embed/h1ojgFnuMYY?autoplay=1&mute=1&loop=1&playlist=h1ojgFnuMYY&controls=0&showinfo=0&rel=0&modestbranding=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <!-- Diamond Om Button - Center of Eyes/Pupil -->
+        <a href="#" class="om-button-diamond">
+            <div class="diamond-shine"></div>
+            <span class="om-symbol-tamil">ௐ</span>
+            <div class="diamond-sparkle"></div>
+        </a>
+
+        <!-- Hero Content -->
         <div class="hero-content">
-            <h1 class="hero-title">MATRIARCH1</h1>
-            <p class="hero-subtitle">Where Ancient Wisdom Meets Future Technology</p>
-            <button class="cta-button">Explore Our Vision</button>
+            <h1 class="hero-title">Through the Lens of Soul</h1>
+            <p class="hero-subtitle">77180 87035</p>
+            <p class="hero-tagline">MATRIARCH1 - Where Ancient Wisdom Meets Future Technology</p>
+            <button class="cta-button" onclick="scrollToSection('vision')">Enter the Portal</button>
         </div>
+
+        <!-- Sound Toggle Button -->
+        <button class="sound-toggle" id="soundToggle">
+            <span class="sound-icon">🔇</span>
+            <span class="sound-text">Sound On</span>
+        </button>
     </section>
 
-    <section class="vision">
+    <!-- Vision Section -->
+    <section id="vision" class="section vision-section">
         <div class="container">
-            <h2>Our Cosmic Journey</h2>
-            <p>Matriarch1 represents the convergence of timeless wisdom and cutting-edge technology.</p>
+            <h2 class="section-title">Our Cosmic Journey</h2>
+            <div class="content-grid">
+                <div class="content-text">
+                    <h3>From Ancient Codes to Future Realities</h3>
+                    <p>Matriarch1 represents the convergence of timeless wisdom and cutting-edge technology. We are creating immersive experiences that bridge spiritual enlightenment with technological innovation.</p>
+                    
+                    <div class="quote-block">
+                        "We will unlock the portal to immortality's final secret."
+                        <span class="quote-author">- Guider 17</span>
+                    </div>
+
+                    <h4>The Chidambaram Code</h4>
+                    <p>Web Series × Films × Apple Vision Pro × T-Moolar App</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2024 MATRIARCH1</p>
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <h2 class="section-title">Our Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Web Series</h3>
+                    <h4>"Markaindai - The Funeral King"</h4>
+                    <p>"The Dead Don't Stay Dead..." - A groundbreaking web series exploring ancient mysteries.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Feature Films</h3>
+                    <p>Cinematic experiences that push the boundaries of storytelling and technology.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Apple Vision Pro</h3>
+                    <p>Immersive music videos and experiences designed for spatial computing.</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>T-Moolar App</h3>
+                    <p>Revolutionary technology platform launching soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="section team-section">
+        <div class="container">
+            <h2 class="section-title">Our Visionaries</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h3>Dr. SIVAN</h3>
+                    <p>Project Head & Visionary</p>
+                </div>
+                <div class="team-member">
+                    <h3>Pasupathati Nathan</h3>
+                    <p>Project Head</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Section -->
+    <section id="investment" class="section investment-section">
+        <div class="container">
+            <h2 class="section-title">Investment Opportunity</h2>
+            <div class="investment-content">
+                <h3>Join Our Cosmic Journey</h3>
+                <p>We are seeking visionary partners and investors to help bring our projects to life. Be part of the future of entertainment and technology.</p>
+                <button class="cta-button investment-cta">Schedule a Meeting</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 MATRIARCH1. All Rights Reserved.</p>
+        </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
