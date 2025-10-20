@@ -1,6 +1,14 @@
 // Matriarch1 Website JavaScript
 console.log('MATRIARCH1 Website Loaded');
 
+// Smooth scrolling function
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const ctaButton = document.querySelector('.cta-button');
     if (ctaButton) {
@@ -14,11 +22,43 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
+            const targetId = this.getAttribute('href').substring(1);
+            scrollToSection(targetId);
         });
     });
+
+    // SIMPLE EYE TRACKING - Basic Version
+    setTimeout(() => {
+        if (typeof webgazer !== 'undefined') {
+            console.log('WebGazer loaded, starting eye tracking...');
+            
+            webgazer.setGazeListener(function(data, elapsedTime) {
+                if (data) {
+                    const omSymbol = document.querySelector('.om-symbol-tamil');
+                    if (omSymbol) {
+                        const x = (data.x / window.innerWidth) * 40 - 20;
+                        const y = (data.y / window.innerHeight) * 40 - 20;
+                        omSymbol.style.transform = `translate(${x}px, ${y}px)`;
+                    }
+                }
+            }).begin();
+            
+            webgazer.showVideoPreview(true).showPredictionPoints(true);
+            
+            // Calibration prompt
+            setTimeout(() => {
+                alert('Please click on 9 points on screen for eye tracking calibration');
+            }, 1000);
+        } else {
+            console.log('WebGazer not found');
+        }
+    }, 2000);
 });
+
+// Reset calibration function
+window.resetCalibration = function() {
+    if (typeof webgazer !== 'undefined') {
+        webgazer.clearData();
+        alert('Calibration reset. Please click on points to recalibrate.');
+    }
+};
