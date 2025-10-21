@@ -9,8 +9,10 @@
     --cosmic-dark: #000814;
     --deep-blue: #0a192f;
     --gold-accent: #d4af37;
+    --gold-light: #ffd700;
     --pure-white: #ffffff;
     --light-gray: #f8f9fa;
+    --text-muted: rgba(255, 255, 255, 0.8);
 }
 
 body {
@@ -30,6 +32,7 @@ body {
     top: 0;
     z-index: 1000;
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 .nav-container {
@@ -45,6 +48,7 @@ body {
     font-size: 1.5rem;
     color: var(--gold-accent);
     font-weight: bold;
+    text-decoration: none;
 }
 
 .nav-menu {
@@ -56,11 +60,14 @@ body {
     color: var(--pure-white);
     text-decoration: none;
     font-size: 0.9rem;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 
 .nav-menu a:hover {
     color: var(--gold-accent);
+    background: rgba(212, 175, 55, 0.1);
 }
 
 /* Hero Section with Video */
@@ -95,7 +102,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 8, 20, 0.4);
+    background: linear-gradient(
+        45deg,
+        rgba(0, 8, 20, 0.7) 0%,
+        rgba(10, 25, 47, 0.5) 100%
+    );
     z-index: 2;
 }
 
@@ -112,6 +123,7 @@ body {
     color: var(--pure-white);
     margin-bottom: 1rem;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
 }
 
 .hero-subtitle {
@@ -119,12 +131,14 @@ body {
     margin-bottom: 0.5rem;
     opacity: 0.9;
     color: var(--gold-accent);
+    font-weight: 300;
 }
 
 .hero-tagline {
     font-size: 1.1rem;
     margin-bottom: 2rem;
     opacity: 0.8;
+    color: var(--text-muted);
 }
 
 /* Diamond Style Om Button */
@@ -136,14 +150,14 @@ body {
     z-index: 100;
     text-decoration: none;
     background: radial-gradient(circle at 30% 30%, 
-        rgba(255, 255, 255, 0.8) 0%,
-        rgba(255, 215, 0, 0.6) 20%,
-        rgba(255, 140, 0, 0.4) 40%,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 215, 0, 0.7) 20%,
+        rgba(255, 140, 0, 0.5) 40%,
         transparent 70%);
     border: 2px solid rgba(255, 215, 0, 0.8);
     border-radius: 50%;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -154,6 +168,10 @@ body {
         0 0 40px rgba(255, 140, 0, 0.4),
         inset 0 0 20px rgba(255, 255, 255, 0.3);
     animation: diamond-pulse 3s ease-in-out infinite;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .om-symbol-tamil {
@@ -167,9 +185,10 @@ body {
         2px 2px 4px rgba(0, 0, 0, 0.5);
     transition: all 0.4s ease;
     filter: brightness(1.2);
+    display: block;
 }
 
-/* Diamond Shine Effect */
+/* Diamond Effects */
 .diamond-shine {
     position: absolute;
     top: -5px;
@@ -183,18 +202,7 @@ body {
     border-radius: 50%;
     animation: shine-rotate 4s linear infinite;
     opacity: 0.7;
-}
-
-/* Diamond Sparkle Effect */
-.diamond-sparkle {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 20% 20%, 
-        rgba(255, 255, 255, 1) 0%,
-        transparent 50%);
-    border-radius: 50%;
-    animation: sparkle-twinkle 2s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
 /* Hover Effects */
@@ -206,7 +214,7 @@ body {
         0 0 90px rgba(255, 69, 0, 0.4),
         inset 0 0 30px rgba(255, 255, 255, 0.4);
     background: radial-gradient(circle at 30% 30%, 
-        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.95) 0%,
         rgba(255, 215, 0, 0.8) 25%,
         rgba(255, 140, 0, 0.6) 45%,
         transparent 75%);
@@ -221,84 +229,76 @@ body {
     transform: scale(1.1);
 }
 
-/* Animations */
-@keyframes diamond-pulse {
-    0%, 100% {
-        box-shadow: 
-            0 0 20px rgba(255, 215, 0, 0.6),
-            0 0 40px rgba(255, 140, 0, 0.4),
-            inset 0 0 20px rgba(255, 255, 255, 0.3);
-    }
-    50% {
-        box-shadow: 
-            0 0 25px rgba(255, 215, 0, 0.8),
-            0 0 50px rgba(255, 140, 0, 0.6),
-            inset 0 0 25px rgba(255, 255, 255, 0.4);
-    }
-}
-
-@keyframes shine-rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes sparkle-twinkle {
-    0% {
-        opacity: 0.3;
-    }
-    100% {
-        opacity: 0.8;
-    }
-}
-
 /* CTA Button */
 .cta-button {
-    background: var(--gold-accent);
+    background: linear-gradient(135deg, var(--gold-accent), var(--gold-light));
     color: var(--cosmic-dark);
     padding: 15px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-family: 'Cinzel', serif;
 }
 
 .cta-button:hover {
-    background: #ffd700;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, var(--gold-light), #ffed4a);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
 }
 
 /* Sound Toggle Button */
 .sound-toggle {
     position: absolute;
     top: 20px;
-    right: 20px;
+    right: 80px;
     z-index: 100;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
+    padding: 10px 15px;
+    border-radius: 25px;
     cursor: pointer;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    font-size: 0.9rem;
 }
 
 .sound-toggle:hover {
     background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Eye Reset Button */
+.eye-reset-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.eye-reset-btn:hover {
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: scale(1.05);
 }
 
 /* Sections */
 .section {
     padding: 100px 1rem;
+    position: relative;
 }
 
 .container {
@@ -312,6 +312,18 @@ body {
     text-align: center;
     margin-bottom: 3rem;
     color: var(--gold-accent);
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gold-accent);
 }
 
 /* Quote Block */
@@ -323,6 +335,7 @@ body {
     font-style: italic;
     font-size: 1.2rem;
     border-radius: 0 8px 8px 0;
+    backdrop-filter: blur(10px);
 }
 
 .quote-author {
@@ -331,6 +344,7 @@ body {
     font-size: 1rem;
     opacity: 0.8;
     font-style: normal;
+    color: var(--gold-accent);
 }
 
 /* Projects Grid */
@@ -338,31 +352,58 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+    margin-top: 2rem;
 }
 
 .project-card {
     background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.project-card:hover::before {
+    left: 100%;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     border-color: var(--gold-accent);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .project-card h3 {
     color: var(--gold-accent);
     margin-bottom: 1rem;
     font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
 }
 
 .project-card h4 {
     margin-bottom: 1rem;
     color: var(--pure-white);
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.project-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
 }
 
 /* Team Grid */
@@ -370,127 +411,43 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+    margin-top: 2rem;
 }
 
 .team-member {
     text-align: center;
     padding: 2rem;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold-accent);
 }
 
 .team-member h3 {
     color: var(--gold-accent);
     margin-bottom: 0.5rem;
     font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+}
+
+.team-member .role {
+    color: var(--text-muted);
+    font-style: italic;
 }
 
 /* Footer */
 .footer {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     padding: 3rem 1rem;
     text-align: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Mobile Responsive */
-@media (min-width: 768px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .hero-title {
-        font-size: 4.5rem;
-    }
-    
-    .nav-menu {
-        gap: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .om-button-diamond {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .om-symbol-tamil {
-        font-size: 1.8rem;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-}
-
-.eye-reset-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    font-family: 'Lato', sans-serif;
-}
-
-.eye-reset-btn:hover {
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.eye-reset-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    font-family: 'Lato', sans-serif;
-}
-
-.eye-reset-btn:hover {
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.om-symbol-tamil {
-    font-size: 1.8rem;
-    transition: transform 0.2s ease-out;
-    display: inline-block;
-    touch-action: none; /* Important for mobile dragging */
-    user-select: none; /* Text selection prevent */
-}
-.om-button-diamond {
-    /* Existing styles */
-    touch-action: none; /* Important for mobile dragging */
-    user-select: none; /* Text selection prevent */
-}
-
-/* Mobile-specific styles */
-@media (max-width: 768px) {
-    .om-button-diamond {
-        width: 80px;  /* Thoda bada karo mobile ke liye */
-        height: 80px;
-    }
-    
-    .om-symbol-tamil {
-        font-size: 2.2rem; /* Mobile par readable size */
-    }
+    margin-top: 4rem;
 }
 
 /* Portal Revelation Section */
@@ -511,8 +468,8 @@ body {
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.15) 0%, transparent 50%);
     animation: portal-glow 8s ease-in-out infinite alternate;
 }
 
@@ -555,13 +512,13 @@ body {
 
 .project-content {
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 15px;
     padding: 3rem;
     margin: 2rem auto;
     max-width: 800px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .project-description p {
@@ -586,6 +543,12 @@ body {
     border-radius: 8px;
     border-left: 4px solid var(--gold-accent);
     font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.project-features li:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: translateX(5px);
 }
 
 /* Portal Controls */
@@ -608,12 +571,14 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
 }
 
 .portal-nav:hover {
     background: var(--gold-accent);
     color: var(--cosmic-dark);
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
 }
 
 .portal-dots {
@@ -633,9 +598,34 @@ body {
 .dot.active {
     background: var(--gold-accent);
     transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 /* Animations */
+@keyframes diamond-pulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(255, 215, 0, 0.6),
+            0 0 40px rgba(255, 140, 0, 0.4),
+            inset 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow: 
+            0 0 25px rgba(255, 215, 0, 0.8),
+            0 0 50px rgba(255, 140, 0, 0.6),
+            inset 0 0 25px rgba(255, 255, 255, 0.4);
+    }
+}
+
+@keyframes shine-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @keyframes portal-glow {
     0% {
         opacity: 0.3;
@@ -657,7 +647,46 @@ body {
 }
 
 /* Mobile Responsive */
+@media (min-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    
+    .nav-menu {
+        gap: 2rem;
+    }
+    
+    .project-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
+    .om-button-diamond {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .om-symbol-tamil {
+        font-size: 1.8rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
     .portal-title {
         font-size: 2.5rem;
     }
@@ -675,4 +704,40 @@ body {
         flex-direction: column;
         gap: 1rem;
     }
+    
+    .nav-menu {
+        display: none; /* Consider adding mobile menu toggle */
+    }
+    
+    .sound-toggle {
+        right: 70px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .eye-reset-btn {
+        top: 15px;
+        right: 15px;
+        padding: 8px 12px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Loading State */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Focus States for Accessibility */
+button:focus,
+.portal-nav:focus,
+.om-button-diamond:focus {
+    outline: 2px solid var(--gold-accent);
+    outline-offset: 2px;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
 }
