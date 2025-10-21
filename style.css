@@ -1,91 +1,135 @@
-/* Cosmic Portal Styles */
-#cosmicPortalOverlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 9999;
-}
+// MATRIARCH1 - Complete Mobile Script
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("🚀 MATRIARCH1 Portal Activated");
+    
+    // Om Button Movement - Mobile Optimized
+    const omButton = document.querySelector('.om-button-diamond');
+    
+    if (omButton) {
+        let isDragging = false;
+        let startX, startY, currentX, currentY;
+        
+        // Touch events for mobile
+        omButton.addEventListener('touchstart', function(e) {
+            isDragging = true;
+            startX = e.touches[0].clientX - omButton.offsetLeft;
+            startY = e.touches[0].clientY - omButton.offsetTop;
+            
+            // Visual feedback
+            omButton.style.transform = 'scale(1.2)';
+            omButton.style.boxShadow = '0 0 50px gold, 0 0 100px orange';
+        });
+        
+        omButton.addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            
+            e.preventDefault();
+            currentX = e.touches[0].clientX - startX;
+            currentY = e.touches[0].clientY - startY;
+            
+            // Move button
+            omButton.style.left = currentX + 'px';
+            omButton.style.top = currentY + 'px';
+        });
+        
+        omButton.addEventListener('touchend', function() {
+            isDragging = false;
+            
+            // Check if moved significantly
+            const movedDistance = Math.sqrt(
+                Math.pow(currentX - window.innerWidth/2, 2) + 
+                Math.pow(currentY - window.innerHeight/2, 2)
+            );
+            
+            if (movedDistance > 100) {
+                // Trigger portal reveal
+                document.getElementById('portal-revelation').scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Success effect
+                omButton.style.boxShadow = '0 0 80px #00ff00, 0 0 120px #00ff00';
+                setTimeout(() => {
+                    omButton.style.boxShadow = '';
+                }, 2000);
+            }
+            
+            // Reset appearance
+            setTimeout(() => {
+                omButton.style.transform = '';
+            }, 500);
+        });
+    }
+    
+    // CTA Button
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+        ctaButton.addEventListener('click', function() {
+            document.getElementById('portal-revelation').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    }
+    
+    // Portal Navigation
+    const prevBtn = document.querySelector('.portal-nav.prev');
+    const nextBtn = document.querySelector('.portal-nav.next');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        // Hide all
+        document.querySelectorAll('.project-reveal').forEach(slide => {
+            slide.classList.remove('active');
+        });
+        // Show current
+        document.querySelectorAll('.project-reveal')[index].classList.add('active');
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            showSlide((currentSlide + 1) % 4);
+        });
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            showSlide((currentSlide - 1 + 4) % 4);
+        });
+    }
+    
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+            showSlide(index);
+        });
+    });
+    
+    // Sound Toggle
+    const soundToggle = document.getElementById('soundToggle');
+    if (soundToggle) {
+        soundToggle.addEventListener('click', function() {
+            const icon = this.querySelector('.sound-icon');
+            const text = this.querySelector('.sound-text');
+            if (icon.textContent === '🔇') {
+                icon.textContent = '🔊';
+                text.textContent = 'Sound Off';
+            } else {
+                icon.textContent = '🔇';
+                text.textContent = 'Sound On';
+            }
+        });
+    }
+    
+    console.log("✅ All features loaded successfully");
+});
 
-#loadingScreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #0F0F23;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.loading-spinner {
-    width: 50px; height: 50px;
-    border: 3px solid rgba(255,255,255,0.1);
-    border-top: 3px solid #F59E0B;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-#omExperience {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: radial-gradient(ellipse at center, #1a1b3e 0%, #0F0F23 100%);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9998;
-}
-
-.om-container {
-    text-align: center;
-}
-
-/* Cosmic Om Button (Naya - Transition ke liye) */
-#cosmicOmButton {
-    width: 120px; height: 120px;
-    background: radial-gradient(circle, #F59E0B, #B45309);
-    border: none; border-radius: 50%;
-    font-size: 48px; color: white;
-    cursor: pointer;
-    box-shadow: 0 0 60px #F59E0B;
-    animation: float 3s ease-in-out infinite;
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 9997;
-}
-
-/* Purana Movable Om Button */
-.floating-om {
-    width: 80px; height: 80px;
-    background: radial-gradient(circle, #6366F1, #4F46E5);
-    border: none; border-radius: 50%;
-    font-size: 36px; color: white;
-    cursor: move;
-    box-shadow: 0 0 30px #6366F1;
-    position: fixed;
-    bottom: 20px; right: 20px;
-    z-index: 9996;
-    touch-action: none;
-}
-
-/* Hover effects */
-#cosmicOmButton:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 80px #F59E0B;
-}
-
-.floating-om:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 50px #6366F1;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes float {
-    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
-    50% { transform: translate(-50%, -50%) translateY(-20px); }
+// Eye calibration reset
+function resetCalibration() {
+    alert("Eye calibration reset. Please look at the Om button to recalibrate.");
 }
