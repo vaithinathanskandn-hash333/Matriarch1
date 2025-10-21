@@ -1,10 +1,13 @@
-// Cosmic Portal Main JavaScript - FIXED
+// Simple Cosmic Portal
+console.log('Cosmic Portal Starting...');
+
 class CosmicPortal {
     constructor() {
         this.init();
     }
 
     init() {
+        console.log('Initializing...');
         setTimeout(() => {
             this.hideLoadingScreen();
             this.showOmExperience();
@@ -26,43 +29,46 @@ class CosmicPortal {
         if (omExperience) {
             omExperience.style.display = 'flex';
             
-            document.getElementById('cosmicOmButton').addEventListener('click', () => {
-                this.activatePortal();
-            });
+            const cosmicOm = document.getElementById('cosmicOmButton');
+            if (cosmicOm) {
+                cosmicOm.addEventListener('click', () => {
+                    this.activatePortal();
+                });
+            }
         }
     }
 
     activatePortal() {
-        const cosmicOmButton = document.getElementById('cosmicOmButton');
+        console.log('Activating portal...');
+        const cosmicOm = document.getElementById('cosmicOmButton');
         const omExperience = document.getElementById('omExperience');
         
-        // Cosmic Om animation
-        cosmicOmButton.style.transition = 'all 1s ease-in-out';
-        cosmicOmButton.style.transform = 'scale(3)';
-        cosmicOmButton.style.opacity = '0';
+        if (cosmicOm) {
+            cosmicOm.style.transition = 'all 1s ease-in-out';
+            cosmicOm.style.transform = 'scale(3)';
+            cosmicOm.style.opacity = '0';
+        }
         
         setTimeout(() => {
             if (omExperience) {
                 omExperience.style.opacity = '0';
                 setTimeout(() => {
                     omExperience.style.display = 'none';
-                    this.showMovableOm(); // Show movable Om after transition
+                    this.addMovableOm();
                 }, 500);
             }
         }, 1000);
     }
 
-    showMovableOm() {
-        // Create and show movable Om
+    addMovableOm() {
+        console.log('Adding movable Om...');
         const movableOm = document.createElement('button');
         movableOm.className = 'floating-om';
         movableOm.innerHTML = 'ॐ';
-        movableOm.setAttribute('title', 'Drag me around!');
         movableOm.style.display = 'block';
         
         document.body.appendChild(movableOm);
         
-        // Make it draggable
         this.makeDraggable(movableOm);
     }
 
@@ -73,7 +79,6 @@ class CosmicPortal {
         element.ontouchstart = dragTouchStart;
 
         function dragMouseDown(e) {
-            e = e || window.event;
             e.preventDefault();
             pos3 = e.clientX;
             pos4 = e.clientY;
@@ -90,7 +95,6 @@ class CosmicPortal {
         }
 
         function elementDrag(e) {
-            e = e || window.event;
             e.preventDefault();
             
             if (e.type === 'touchmove') {
@@ -118,7 +122,7 @@ class CosmicPortal {
     }
 }
 
-// Start when page loads
-document.addEventListener('DOMContentLoaded', () => {
+// Start the portal
+document.addEventListener('DOMContentLoaded', function() {
     new CosmicPortal();
 });
