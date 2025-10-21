@@ -1,82 +1,67 @@
-// Mobile-Optimized Om Button Movement - Complete Script
+// MATRIARCH1 - Complete Mobile Script
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("MATRIARCH1 - Portal Initialized");
+    console.log("🚀 MATRIARCH1 Portal Activated");
     
+    // Om Button Movement - Mobile Optimized
     const omButton = document.querySelector('.om-button-diamond');
     
-    // Make Om button draggable on mobile
-    let isDragging = false;
-    let currentX, currentY, initialX, initialY;
-    
     if (omButton) {
-        omButton.addEventListener('touchstart', dragStart);
-        omButton.addEventListener('touchmove', drag);
-        omButton.addEventListener('touchend', dragEnd);
+        let isDragging = false;
+        let startX, startY, currentX, currentY;
         
-        console.log("Om button movement activated");
-    }
-
-    function dragStart(e) {
-        initialX = e.touches[0].clientX - omButton.offsetLeft;
-        initialY = e.touches[0].clientY - omButton.offsetTop;
-        isDragging = true;
-        
-        // Visual feedback
-        omButton.style.transform = 'scale(1.1)';
-        omButton.style.boxShadow = '0 0 40px gold, 0 0 80px orange';
-        console.log("Dragging started");
-    }
-    
-    function drag(e) {
-        if (!isDragging) return;
-        
-        e.preventDefault();
-        currentX = e.touches[0].clientX - initialX;
-        currentY = e.touches[0].clientY - initialY;
-        
-        // Move the button
-        omButton.style.left = currentX + 'px';
-        omButton.style.top = currentY + 'px';
-        omButton.style.transform = 'translate(0, 0) scale(1.1)';
-    }
-    
-    function dragEnd() {
-        isDragging = false;
-        console.log("Dragging ended");
-        
-        // If moved significantly, trigger next step
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-        const movedDistance = Math.sqrt(
-            Math.pow(currentX - centerX, 2) + 
-            Math.pow(currentY - centerY, 2)
-        );
-        
-        if (movedDistance > 100) {
-            console.log("Portal activation triggered");
-            revealPortal();
-        }
-        
-        // Reset appearance
-        setTimeout(() => {
-            omButton.style.transform = '';
-            omButton.style.boxShadow = '';
-        }, 500);
-    }
-    
-    function revealPortal() {
-        // Scroll to portal section
-        document.getElementById('portal-revelation').scrollIntoView({
-            behavior: 'smooth'
+        // Touch events for mobile
+        omButton.addEventListener('touchstart', function(e) {
+            isDragging = true;
+            startX = e.touches[0].clientX - omButton.offsetLeft;
+            startY = e.touches[0].clientY - omButton.offsetTop;
+            
+            // Visual feedback
+            omButton.style.transform = 'scale(1.2)';
+            omButton.style.boxShadow = '0 0 50px gold, 0 0 100px orange';
         });
         
-        // Show success message
-        setTimeout(() => {
-            alert('🎉 Portal Activated! Welcome to the Cosmic Journey');
-        }, 1000);
+        omButton.addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            
+            e.preventDefault();
+            currentX = e.touches[0].clientX - startX;
+            currentY = e.touches[0].clientY - startY;
+            
+            // Move button
+            omButton.style.left = currentX + 'px';
+            omButton.style.top = currentY + 'px';
+        });
+        
+        omButton.addEventListener('touchend', function() {
+            isDragging = false;
+            
+            // Check if moved significantly
+            const movedDistance = Math.sqrt(
+                Math.pow(currentX - window.innerWidth/2, 2) + 
+                Math.pow(currentY - window.innerHeight/2, 2)
+            );
+            
+            if (movedDistance > 100) {
+                // Trigger portal reveal
+                document.getElementById('portal-revelation').scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Success effect
+                omButton.style.boxShadow = '0 0 80px #00ff00, 0 0 120px #00ff00';
+                setTimeout(() => {
+                    omButton.style.boxShadow = '';
+                }, 2000);
+            }
+            
+            // Reset appearance
+            setTimeout(() => {
+                omButton.style.transform = '';
+            }, 500);
+        });
     }
-
-    // Existing functionality
+    
+    // CTA Button
     const ctaButton = document.querySelector('.cta-button');
     if (ctaButton) {
         ctaButton.addEventListener('click', function() {
@@ -85,14 +70,52 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-
-    // Sound toggle functionality
+    
+    // Portal Navigation
+    const prevBtn = document.querySelector('.portal-nav.prev');
+    const nextBtn = document.querySelector('.portal-nav.next');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+        // Hide all
+        document.querySelectorAll('.project-reveal').forEach(slide => {
+            slide.classList.remove('active');
+        });
+        // Show current
+        document.querySelectorAll('.project-reveal')[index].classList.add('active');
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            showSlide((currentSlide + 1) % 4);
+        });
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            showSlide((currentSlide - 1 + 4) % 4);
+        });
+    }
+    
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', function() {
+            showSlide(index);
+        });
+    });
+    
+    // Sound Toggle
     const soundToggle = document.getElementById('soundToggle');
     if (soundToggle) {
         soundToggle.addEventListener('click', function() {
             const icon = this.querySelector('.sound-icon');
             const text = this.querySelector('.sound-text');
-            
             if (icon.textContent === '🔇') {
                 icon.textContent = '🔊';
                 text.textContent = 'Sound Off';
@@ -102,54 +125,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Portal navigation
-    const prevButton = document.querySelector('.portal-nav.prev');
-    const nextButton = document.querySelector('.portal-nav.next');
-    const dots = document.querySelectorAll('.dot');
-    let currentProject = 0;
-    const projects = ['kotravayi', 'markaindai', 'sivan-revelation', 'chidambaram'];
-
-    if (prevButton && nextButton) {
-        prevButton.addEventListener('click', showPrevProject);
-        nextButton.addEventListener('click', showNextProject);
-        
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => showProject(index));
-        });
-    }
-
-    function showProject(index) {
-        // Hide all projects
-        projects.forEach(project => {
-            document.getElementById(project).classList.remove('active');
-        });
-        
-        // Show selected project
-        document.getElementById(projects[index]).classList.add('active');
-        
-        // Update dots
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-        
-        currentProject = index;
-    }
-
-    function showNextProject() {
-        currentProject = (currentProject + 1) % projects.length;
-        showProject(currentProject);
-    }
-
-    function showPrevProject() {
-        currentProject = (currentProject - 1 + projects.length) % projects.length;
-        showProject(currentProject);
-    }
-
-    // Eye tracking reset
-    window.resetCalibration = function() {
-        alert('Eye calibration reset. Please recalibrate.');
-    };
-
-    console.log("All MATRIARCH1 features loaded successfully");
+    
+    console.log("✅ All features loaded successfully");
 });
+
+// Eye calibration reset
+function resetCalibration() {
+    alert("Eye calibration reset. Please look at the Om button to recalibrate.");
+}
