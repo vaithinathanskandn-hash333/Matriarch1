@@ -1,9 +1,14 @@
-/* Cosmic Portal Styles */
+/* Cosmic Portal Styles - FIXED */
 #cosmicPortalOverlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     z-index: 9999;
+    pointer-events: none;
+}
+
+#cosmicPortalOverlay * {
+    pointer-events: auto;
 }
 
 #loadingScreen {
@@ -40,14 +45,43 @@
     text-align: center;
 }
 
-#omButton {
+/* Cosmic Om Button - FIXED POSITION */
+#cosmicOmButton {
     width: 120px; height: 120px;
     background: radial-gradient(circle, #F59E0B, #B45309);
     border: none; border-radius: 50%;
     font-size: 48px; color: white;
     cursor: pointer;
     box-shadow: 0 0 60px #F59E0B;
-    animation: float 3s ease-in-out infinite;
+    animation: cosmicFloat 3s ease-in-out infinite;
+    position: relative;
+    z-index: 9997;
+}
+
+/* Movable Om Button - FIXED */
+.floating-om {
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, #6366F1, #4F46E5);
+    border: none; border-radius: 50%;
+    font-size: 36px; color: white;
+    cursor: move;
+    box-shadow: 0 0 30px #6366F1;
+    position: fixed;
+    bottom: 20px; right: 20px;
+    z-index: 9996;
+    touch-action: none;
+    display: none; /* Start hidden, show after transition */
+}
+
+/* Hover effects */
+#cosmicOmButton:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 80px #F59E0B;
+}
+
+.floating-om:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 50px #6366F1;
 }
 
 @keyframes spin {
@@ -55,7 +89,7 @@
     100% { transform: rotate(360deg); }
 }
 
-@keyframes float {
+@keyframes cosmicFloat {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
 }
