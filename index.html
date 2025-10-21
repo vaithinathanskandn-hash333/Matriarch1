@@ -97,8 +97,55 @@
     </div>
 
     <!-- Cosmic Portal CSS and JS -->
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js"></script>
+    <!-- Cosmic Portal CSS and JS -->
+<link rel="stylesheet" href="css/style.css">
+
+<script>
+setTimeout(function(){
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('omExperience').style.display = 'flex';
+}, 2000);
+
+document.getElementById('cosmicOmButton').onclick = function() {
+    var om = document.getElementById('cosmicOmButton');
+    var experience = document.getElementById('omExperience');
+    
+    om.style.transition = 'all 1s ease';
+    om.style.transform = 'scale(3)';
+    om.style.opacity = '0';
+    
+    setTimeout(function(){
+        experience.style.transition = 'opacity 0.5s ease';
+        experience.style.opacity = '0';
+        setTimeout(function(){
+            experience.style.display = 'none';
+        }, 500);
+    }, 1000);
+};
+</script>
+    <script>
+setTimeout(function(){
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('omExperience').style.display = 'flex';
+}, 2000);
+
+document.getElementById('cosmicOmButton').onclick = function() {
+    var om = document.getElementById('cosmicOmButton');
+    var experience = document.getElementById('omExperience');
+    
+    om.style.transition = 'all 1s ease';
+    om.style.transform = 'scale(3)';
+    om.style.opacity = '0';
+    
+    setTimeout(function(){
+        experience.style.transition = 'opacity 0.5s ease';
+        experience.style.opacity = '0';
+        setTimeout(function(){
+            experience.style.display = 'none';
+        }, 500);
+    }, 1000);
+};
+    </script>
 
 </body>
 </html>
