@@ -1,135 +1,460 @@
-// MATRIARCH1 - Complete Mobile Script
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("🚀 MATRIARCH1 Portal Activated");
-    
-    // Om Button Movement - Mobile Optimized
-    const omButton = document.querySelector('.om-button-diamond');
-    
-    if (omButton) {
-        let isDragging = false;
-        let startX, startY, currentX, currentY;
-        
-        // Touch events for mobile
-        omButton.addEventListener('touchstart', function(e) {
-            isDragging = true;
-            startX = e.touches[0].clientX - omButton.offsetLeft;
-            startY = e.touches[0].clientY - omButton.offsetTop;
-            
-            // Visual feedback
-            omButton.style.transform = 'scale(1.2)';
-            omButton.style.boxShadow = '0 0 50px gold, 0 0 100px orange';
-        });
-        
-        omButton.addEventListener('touchmove', function(e) {
-            if (!isDragging) return;
-            
-            e.preventDefault();
-            currentX = e.touches[0].clientX - startX;
-            currentY = e.touches[0].clientY - startY;
-            
-            // Move button
-            omButton.style.left = currentX + 'px';
-            omButton.style.top = currentY + 'px';
-        });
-        
-        omButton.addEventListener('touchend', function() {
-            isDragging = false;
-            
-            // Check if moved significantly
-            const movedDistance = Math.sqrt(
-                Math.pow(currentX - window.innerWidth/2, 2) + 
-                Math.pow(currentY - window.innerHeight/2, 2)
-            );
-            
-            if (movedDistance > 100) {
-                // Trigger portal reveal
-                document.getElementById('portal-revelation').scrollIntoView({
-                    behavior: 'smooth'
-                });
-                
-                // Success effect
-                omButton.style.boxShadow = '0 0 80px #00ff00, 0 0 120px #00ff00';
-                setTimeout(() => {
-                    omButton.style.boxShadow = '';
-                }, 2000);
-            }
-            
-            // Reset appearance
-            setTimeout(() => {
-                omButton.style.transform = '';
-            }, 500);
-        });
-    }
-    
-    // CTA Button
-    const ctaButton = document.querySelector('.cta-button');
-    if (ctaButton) {
-        ctaButton.addEventListener('click', function() {
-            document.getElementById('portal-revelation').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    }
-    
-    // Portal Navigation
-    const prevBtn = document.querySelector('.portal-nav.prev');
-    const nextBtn = document.querySelector('.portal-nav.next');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
-    
-    function showSlide(index) {
-        // Hide all
-        document.querySelectorAll('.project-reveal').forEach(slide => {
-            slide.classList.remove('active');
-        });
-        // Show current
-        document.querySelectorAll('.project-reveal')[index].classList.add('active');
-        // Update dots
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-        currentSlide = index;
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            showSlide((currentSlide + 1) % 4);
-        });
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-            showSlide((currentSlide - 1 + 4) % 4);
-        });
-    }
-    
-    // Dot navigation
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            showSlide(index);
-        });
-    });
-    
-    // Sound Toggle
-    const soundToggle = document.getElementById('soundToggle');
-    if (soundToggle) {
-        soundToggle.addEventListener('click', function() {
-            const icon = this.querySelector('.sound-icon');
-            const text = this.querySelector('.sound-text');
-            if (icon.textContent === '🔇') {
-                icon.textContent = '🔊';
-                text.textContent = 'Sound Off';
-            } else {
-                icon.textContent = '🔇';
-                text.textContent = 'Sound On';
-            }
-        });
-    }
-    
-    console.log("✅ All features loaded successfully");
-});
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-// Eye calibration reset
-function resetCalibration() {
-    alert("Eye calibration reset. Please look at the Om button to recalibrate.");
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background: #000;
+    overflow-x: hidden;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #ffd700;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0,0,0,0.7) 0%, rgba(106,13,173,0.4) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 2rem;
+}
+
+.hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffd700, #ff6b00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-tagline {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    color: #ccc;
+    font-weight: 300;
+}
+
+.cta-button {
+    background: linear-gradient(135deg, #ffd700, #ff6b00);
+    color: #000;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+
+/* Sections */
+.section {
+    padding: 5rem 0;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffd700;
+}
+
+/* Portal Section */
+.portal-section {
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a0a2e 100%);
+}
+
+.portal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffd700;
+}
+
+.project-reveal {
+    display: none;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.project-reveal.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.project-header {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-name {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+}
+
+.project-type {
+    color: #ff6b00;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.project-features {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.project-features li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+/* Portal Controls */
+.portal-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.portal-nav {
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.portal-nav:hover {
+    background: #ffd700;
+    color: #000;
+}
+
+.portal-dots {
+    display: flex;
+    gap: 1rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #ffd700;
+    transform: scale(1.2);
+}
+
+/* Other Sections */
+.vision-section {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0c0c0c 100%);
+}
+
+.projects-section {
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a0a2e 100%);
+}
+
+.team-section {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0c0c0c 100%);
+}
+
+.investment-section {
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a0a2e 100%);
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.content-text h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.content-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #ccc;
+}
+
+.quote-block {
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 4px solid #ffd700;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+.quote-author {
+    display: block;
+    margin-top: 1rem;
+    font-weight: 700;
+    color: #ff6b00;
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.project-card h3 {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.project-card h4 {
+    color: #ff6b00;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Team Grid */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.team-member {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.team-member h3 {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+/* Investment Section */
+.investment-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.investment-content h3 {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.investment-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #ccc;
+}
+
+.investment-cta {
+    background: linear-gradient(135deg, #00ff88, #00ccff);
+    color: #000;
+}
+
+/* Footer */
+.footer {
+    background: #000;
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sound Toggle */
+.sound-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.sound-toggle:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+}
+
+/* Eye Reset Button */
+.eye-reset-btn {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.eye-reset-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-tagline {
+        font-size: 1.1rem;
+    }
+    
+    .nav-menu {
+        display: none;
+    }
+    
+    .portal-controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+    }
 }
